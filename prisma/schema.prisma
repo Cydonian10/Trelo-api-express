@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Colors {
+  Sky
+  Yellow
+  Green
+  Red
+  Violet
+  Gray
+}
+
+enum Role {
+  Admin
+  User
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  password String
+  role     Role?   @default(value: User)
+  avatar   String?
+
+  boards UserBoard[]
+
+  meBoards Board[]
+
+  @@map("users")
+}
+
+model UserBoard {
+  member   User  @relation(fields: [memberId], references: [id])
+  memberId Int   @map("member_id")
+  board    Board @relation(fields: [boardId], references: [id])
+  boardId  Int   @map("board_id")
+
+  @@id([memberId, boardId])
+  @@map("user_board")
+}
+
+model Board {
+  id              Int    @id @default(autoincrement())
+  title           String
+  backgroundColor Colors
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+
+  list    List[]
+  members UserBoard[]
+
+  @@map("boards")
+}
+
+model Card {
+  id          Int    @id @default(autoincrement())
+  description String
+  title       String
+  position    Int    @db.Integer
+
+  List   List @relation(fields: [listId], references: [id])
+  listId Int  @map("list_id")
+
+  @@map("cards")
+}
+
+model List {
+  id       Int    @id @default(autoincrement())
+  title    String
+  position Int    @db.Integer
+
+  board   Board @relation(fields: [boardId], references: [id])
+  boardId Int   @map("board_id")
+
+  cards Card[]
+
+  @@map("lists")
+}

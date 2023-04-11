@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    // project options
+    "lib": [
+      "ESNext",
+      "dom"
+    ], 
+    "outDir": "lib", 
+    "removeComments": true, 
+    "target": "ES6", 
+    // Module resolution
+    "module": "CommonJS",
+    "baseUrl": "./", 
+    "esModuleInterop": true, 
+    "paths": {
+      "@/*":["./src/*"]
+    }, 
+
+    // Source Map
+    "sourceMap": true,
+    "sourceRoot": "/", 
+
+    // Strict Checks
+    "alwaysStrict": true, 
+    "allowUnreachableCode": false, 
+    "strictNullChecks": true, 
+
+    // Linter Checks
+    //"noImplicitReturns": true,
+    //"noUncheckedIndexedAccess": true, 
+    //"noUnusedLocals": true, 
+    //"noUnusedParameters": true 
+  },
+  "include": ["./**/*.ts"],
+  "exclude": [
+    "node_modules/**/*"
+  ]
+}
