@@ -4,7 +4,7 @@ export class BoardService {
   constructor(private orm: PrismaClient) {}
 
   async findById(id: Board["id"]) {
-    const resp = await this.orm.board.findMany({
+    const resp = await this.orm.board.findUnique({
       where: { id },
       include: {
         list: {

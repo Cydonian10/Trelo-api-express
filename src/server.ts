@@ -2,8 +2,9 @@ import express, { Application } from "express";
 import http from "http";
 import path from "path";
 import { cwd } from "process";
-import "@/config/config"
-import passport from 'passport';
+import cors from "cors";
+import "@/config/config";
+import passport from "passport";
 
 import { ApiRoute } from "@/routes/routes";
 import { JwtStrategy } from "@/strategies/jwt.strategy";
@@ -12,12 +13,12 @@ import { ErrorHandler } from "@/middlewares/error.handler";
 declare global {
   namespace Express {
     interface User {
-      id:number,
-      name:string,
-      rol:string
+      id: number;
+      name: string;
+      rol: string;
     }
     interface Request {
-      user?:Express.User
+      user?: Express.User;
     }
   }
 }
@@ -32,13 +33,13 @@ class ServerHttp {
   }
 
   private middlewares() {
+    this.app.use(express.json());
+    this.app.use(cors());
+    this.app.use("/public", express.static(path.join(cwd(), "public")));
+    passport.use(JwtStrategy);
 
-    this.app.use(express.json())
-    this.app.use("/public",express.static(path.join(cwd(), "public")));
-    passport.use(JwtStrategy)
-    
-    ApiRoute(this.app)
-    ErrorHandler(this.app)
+    ApiRoute(this.app);
+    ErrorHandler(this.app);
   }
 
   private listenServer() {

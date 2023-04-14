@@ -67,7 +67,7 @@ model Card {
   id          Int    @id @default(autoincrement())
   description String
   title       String
-  position    Int    @db.Integer
+  position    Float
 
   List   List @relation(fields: [listId], references: [id])
   listId Int  @map("list_id")
@@ -78,7 +78,7 @@ model Card {
 model List {
   id       Int    @id @default(autoincrement())
   title    String
-  position Int    @db.Integer
+  position Float
 
   board   Board @relation(fields: [boardId], references: [id])
   boardId Int   @map("board_id")

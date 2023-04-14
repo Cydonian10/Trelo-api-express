@@ -6,13 +6,15 @@ import { ListService } from "@/services/list.service";
 import { AuthService } from "./auth.service";
 import { UserService } from "./user.service";
 import { ProfileService } from "./profile.service";
+import { BoardUserInterface } from "./user-board.service";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-export const cardService = new CardService(prisma)
-export const boardService = new BoardService(prisma)
-export const listService = new ListService(prisma)
-export const userService = new UserService(prisma)
-export const profileServce = new ProfileService(prisma)
+export const cardService = new CardService(prisma);
+export const boardService = new BoardService(prisma);
+export const listService = new ListService(prisma);
+export const userService = new UserService(prisma);
+export const profileServce = new ProfileService(prisma);
+export const boardUserService = new BoardUserInterface(prisma);
 
-export const authService = new AuthService(prisma,userService)
+export const authService = new AuthService(prisma, userService);

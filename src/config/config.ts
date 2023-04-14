@@ -1,8 +1,8 @@
-import env from 'dotenv';
+import env from "dotenv";
 
-env.config()
+env.config();
 
-export const config =  {
-    jwtSecret:process.env.JWT_SECRET,
-    jwtRefreshSecret:process.env.JWT_REFRESH_SECRET
-}
+export const config = {
+  jwtSecret: process.env.JWT_SECRET,
+  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
+};
