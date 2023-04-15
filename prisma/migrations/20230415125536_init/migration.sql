@@ -4,6 +4,9 @@ CREATE TYPE "Colors" AS ENUM ('Sky', 'Yellow', 'Green', 'Red', 'Violet', 'Gray')
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('Admin', 'User');
 
+-- CreateEnum
+CREATE TYPE "MemberRole" AS ENUM ('Writer', 'Read');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
@@ -20,6 +23,7 @@ CREATE TABLE "users" (
 CREATE TABLE "user_board" (
     "member_id" INTEGER NOT NULL,
     "board_id" INTEGER NOT NULL,
+    "role" "MemberRole" DEFAULT 'Read',
 
     CONSTRAINT "user_board_pkey" PRIMARY KEY ("member_id","board_id")
 );
@@ -39,7 +43,7 @@ CREATE TABLE "cards" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "position" INTEGER NOT NULL,
+    "position" DOUBLE PRECISION NOT NULL,
     "list_id" INTEGER NOT NULL,
 
     CONSTRAINT "cards_pkey" PRIMARY KEY ("id")
@@ -49,7 +53,7 @@ CREATE TABLE "cards" (
 CREATE TABLE "lists" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
-    "position" INTEGER NOT NULL,
+    "position" DOUBLE PRECISION NOT NULL,
     "board_id" INTEGER NOT NULL,
 
     CONSTRAINT "lists_pkey" PRIMARY KEY ("id")

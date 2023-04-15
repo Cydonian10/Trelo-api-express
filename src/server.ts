@@ -39,6 +39,7 @@ class ServerHttp {
     passport.use(JwtStrategy);
 
     ApiRoute(this.app);
+
     ErrorHandler(this.app);
   }
 

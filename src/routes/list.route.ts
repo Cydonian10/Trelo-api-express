@@ -6,7 +6,7 @@ import passport from "passport";
 
 export const listRoute = Router();
 
-listRoute.use(passport.authenticate("jwt",{session:false}))
+listRoute.use(passport.authenticate("jwt", { session: false }));
 
 /**
  * Crear una lista
@@ -27,7 +27,7 @@ listRoute.post(
 );
 
 /**
- * Coleccion de listas por board id
+ * Traer Coleccion de listas por board id
  */
 listRoute.get(
   "/board/:id",
@@ -46,19 +46,18 @@ listRoute.get(
  * Actulizar lista
  */
 listRoute.put(
-    "/:id",
-    async (req: Request, res: Response, next: NextFunction) => {
-      const id = req.params.id;
-      const body = req.body
-      try {
-        const resp = await listService.update(Number(id),body);
-        res.json(resp);
-      } catch (error) {
-        next(error);
-      }
+  "/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const body = req.body;
+    try {
+      const resp = await listService.update(Number(id), body);
+      res.json(resp);
+    } catch (error) {
+      next(error);
     }
-  );
-  
+  }
+);
 
 /**
  * Remover lista

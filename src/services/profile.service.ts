@@ -1,17 +1,51 @@
-import { PrismaClient, User } from "@prisma/client";
+import { notFound } from "@hapi/boom";
+import { Board, PrismaClient, User, UserBoard } from "@prisma/client";
+
+function exclude<User, key extends keyof User>(
+  user: User,
+  keys: key[]
+): Omit<User, key> {
+  for (let key of keys) {
+    delete user[key];
+  }
+  return user;
+}
 
 export class ProfileService {
   constructor(private orm: PrismaClient) {}
 
-  async profile(id: User["id"]): Promise<User | null> {
+  async profile(id: User["id"]) {
     const user = await this.orm.user.findUnique({ where: { id } });
-    return user;
+
+    if (!user) throw notFound("Error");
+
+    return exclude(user, ["password"]);
   }
 
   async meBoards(id: User["id"]) {
-    return this.orm.board.findMany({
+    const boards = await this.orm.board.findMany({
       where: { userId: id },
-      include: { members: true },
+      include: {
+        members: {
+          include: {
+            member: true,
+          },
+        },
+      },
+    });
+
+    return boards.map((board) => {
+      return {
+        ...board,
+        members: board.members.map((m) => {
+          return {
+            name: m.member.name,
+            email: m.member.email,
+            id: m.member.id,
+            role: m.role,
+          };
+        }),
+      };
     });
   }
 }

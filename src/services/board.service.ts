@@ -44,15 +44,17 @@ export class BoardService {
     });
   }
 
-  async create(data: {title:string,backgroundColor:Colors,userId:number}) {
- ;
- 
+  async create(data: {
+    title: string;
+    backgroundColor: Colors;
+    userId: number;
+  }) {
     const board = await this.orm.board.create({
       data: {
         title: data.title,
         backgroundColor: data.backgroundColor,
-        userId:data.userId,
-      
+        userId: data.userId,
+
         list: {
           createMany: {
             data: [

@@ -24,6 +24,11 @@ enum Role {
   User
 }
 
+enum MemberRole {
+  Writer
+  Read
+}
+
 model User {
   id       Int     @id @default(autoincrement())
   name     String
@@ -44,6 +49,8 @@ model UserBoard {
   memberId Int   @map("member_id")
   board    Board @relation(fields: [boardId], references: [id])
   boardId  Int   @map("board_id")
+
+  role MemberRole? @default(value: Read)
 
   @@id([memberId, boardId])
   @@map("user_board")
