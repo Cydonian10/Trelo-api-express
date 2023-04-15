@@ -45,9 +45,9 @@ model User {
 }
 
 model UserBoard {
-  member   User  @relation(fields: [memberId], references: [id])
+  member   User  @relation(fields: [memberId], references: [id], onDelete: Cascade)
   memberId Int   @map("member_id")
-  board    Board @relation(fields: [boardId], references: [id])
+  board    Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
   boardId  Int   @map("board_id")
 
   role MemberRole? @default(value: Read)
@@ -76,7 +76,7 @@ model Card {
   title       String
   position    Float
 
-  List   List @relation(fields: [listId], references: [id])
+  List   List @relation(fields: [listId], references: [id], onDelete: Cascade)
   listId Int  @map("list_id")
 
   @@map("cards")
@@ -87,7 +87,7 @@ model List {
   title    String
   position Float
 
-  board   Board @relation(fields: [boardId], references: [id])
+  board   Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
   boardId Int   @map("board_id")
 
   cards Card[]
