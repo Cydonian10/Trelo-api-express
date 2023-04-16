@@ -45,31 +45,52 @@ boardRoute.get("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-
 /**
  * Traer un board
  */
-boardRoute.get("/:id",async (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id
-  try {
-    const resp = await boardService.findById(Number(id));
-    res.json(resp);
-  } catch (error) {
-    next(error);
+boardRoute.get(
+  "/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    try {
+      const resp = await boardService.findById(Number(id));
+      res.json(resp);
+    } catch (error) {
+      next(error);
+    }
   }
-});
-
+);
 
 /**
  * Actulizar board
  */
-boardRoute.put("/:id",async (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id
-  const body = req.body
-  try {
-    const resp = await boardService.update(Number(id),body);
-    res.json(resp);
-  } catch (error) {
-    next(error);
+boardRoute.put(
+  "/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const body = req.body;
+    try {
+      const resp = await boardService.update(Number(id), body);
+      res.json(resp);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
+
+/**
+ * Eliminar Board
+ */
+boardRoute.delete(
+  "/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+
+    try {
+      const resp = await boardService.remove(Number(id));
+      res.json(resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+);

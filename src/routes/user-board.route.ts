@@ -10,7 +10,7 @@ import passport from "passport";
 
 export const boarUserRouter = Router();
 
-boarUserRouter.use([passport.authenticate("jwt")]);
+boarUserRouter.use([passport.authenticate("jwt", { session: false })]);
 
 /**
  * Añadir una coleccion de miembros a mi board

@@ -76,4 +76,12 @@ export class BoardService {
 
     return resp;
   }
+
+  async remove(id: Board["id"]) {
+    const resp = await this.orm.board.delete({
+      where: { id },
+    });
+
+    return resp;
+  }
 }

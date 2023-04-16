@@ -32,3 +32,17 @@ profileRoute.get(
     }
   }
 );
+
+profileRoute.get(
+  "/board-members",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.user!;
+
+    const resp = await profileServce.membersBoard(id);
+    try {
+      res.json(resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+);

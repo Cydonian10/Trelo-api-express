@@ -48,4 +48,19 @@ export class ProfileService {
       };
     });
   }
+
+  async membersBoard(id: User["id"]) {
+    return this.orm.board.findMany({
+      where: {
+        members: {
+          some: { memberId: id },
+        },
+      },
+      include: {
+        user: {
+          select: { name: true, email: true },
+        },
+      },
+    });
+  }
 }
